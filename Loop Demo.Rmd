@@ -1,0 +1,65 @@
+---
+title: "Report Building Loop Demo"
+author: "NEY Analytics"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library('plotly')
+library('tidyverse')
+library('gt')
+library('knitr')
+library('htmltools')
+library('rmarkdown')
+
+```
+
+## Introduction
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars, echo= FALSE, message=FALSE, warning=FALSE}
+
+gt(head(mtcars))
+
+```
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE, include = FALSE}
+
+#Select the 'iris' dataset
+iris<-(iris)
+
+#Create a list of Metrics to run through  
+HeaderTable<- iris %>% distinct(Species) 
+
+#Create a blank output  
+  out = NULL
+
+#Create a loop to loop through the value    
+  for (j in 1:nrow(`HeaderTable`)) {
+    
+#select the current metric in the loop to use in the template file.    
+CurrentMetric<-HeaderTable$Species[j]
+
+#create an output for each metric     
+out<- c(out, knit_child('iris_Template.Rmd'))
+  
+  }
+  
+```
+
+
+```{r, echo = FALSE, results='asis'}
+
+cat(paste(out, collapse = '\n'))
+
+```
+
+## Conclusion
+
+Some random text at the bottom of your report. 
