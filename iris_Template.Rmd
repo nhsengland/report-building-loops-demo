@@ -20,3 +20,21 @@ You can also embed plots, for example:
 plot_ly(SummaryTable, x = ~SummaryTable$Sepal.Length, y = ~SummaryTable$Sepal.Width, type = 'scatter')
 ```
 
+
+```{r , echo = FALSE, results='asis'}
+
+if(`CurrentMetric` == 'setosa'){
+
+cat("## Extra Plot", "\n \n")
+}
+
+```
+
+```{r , echo = FALSE, echo=FALSE, warning=FALSE, message=FALSE, out.width= '100%', fig.height = 6}
+
+if(`CurrentMetric` == 'setosa'){
+
+plot_ly(SummaryTable, x = ~SummaryTable$Sepal.Length, y = ~SummaryTable$Sepal.Width, type = 'scatter', marker = list(color = 'purple', size = 10))
+}
+
+```
